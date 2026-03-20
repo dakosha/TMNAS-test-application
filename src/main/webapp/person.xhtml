@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Person Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        h2 {
+            color: #333;
+        }
+        .person-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 24px;
+            max-width: 450px;
+        }
+        .person-card table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .person-card td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .person-card td:first-child {
+            font-weight: bold;
+            color: #555;
+            width: 140px;
+        }
+        .nav-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h2>Person Information</h2>
+    <div class="person-card">
+        <table>
+            <tr>
+                <td>First Name:</td>
+                <td>#{personBean.person.firstName}</td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td>#{personBean.person.lastName}</td>
+            </tr>
+            <tr>
+                <td>Date of Birth:</td>
+                <td>#{personBean.person.dateOfBirth}</td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td>#{personBean.person.phone}</td>
+            </tr>
+        </table>
+    </div>
+    <a class="nav-link" href="cars.xhtml">View Cars List</a>
+    <br/>
+    <a class="nav-link" href="hello.xhtml">Back to Hello</a>
+</h:body>
+</html>
+
