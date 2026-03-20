@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Car Filter Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h2 { color: #333; margin-bottom: 8px; }
+        .subtitle { color: #777; font-size: 14px; margin-bottom: 24px; }
+
+        .filter-panel {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 24px;
+            max-width: 700px;
+            margin-bottom: 24px;
+        }
+        .filter-grid td {
+            padding: 10px 12px;
+            vertical-align: top;
+        }
+        .filter-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 14px;
+        }
+        .filter-select {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            min-width: 180px;
+        }
+        .filter-listbox {
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            min-width: 180px;
+        }
+
+        .action-link {
+            color: #0066cc;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+        .action-link:hover { color: #004499; }
+
+        .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 12px;
+        }
+        .btn-secondary {
+            background-color: #888;
+            color: #fff;
+        }
+        .btn-secondary:hover { background-color: #666; }
+
+        .result-count {
+            margin: 12px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* h:dataTable styles */
+        .cars-table {
+            width: 100%;
+            max-width: 700px;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .cars-table th {
+            background-color: #0066cc;
+            color: #fff;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .cars-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #eee;
+        }
+        .cars-table tr:hover td {
+            background-color: #f0f7ff;
+        }
+
+        .nav-links { margin-top: 24px; }
+        .nav-link {
+            color: #0066cc;
+            text-decoration: none;
+            margin-right: 16px;
+        }
+        .nav-link:hover { text-decoration: underline; }
+    </style>
+</h:head>
+<h:body>
+    <h2>Car Filter Demo</h2>
+    <p class="subtitle">
+        Demonstrates: <b>h:selectOneMenu</b>, <b>h:selectManyListbox</b>,
+        <b>h:commandLink</b>, <b>h:column</b>, <b>h:panelGroup</b>,
+        <b>h:panelGrid</b>, <b>h:form</b>, <b>h:outputText</b>
+    </p>
+
+    <div class="filter-panel">
+        <h:form id="filterForm">
+            <!-- h:panelGrid for filter layout -->
+            <h:panelGrid columns="2" styleClass="filter-grid">
+
+                <!-- h:selectOneMenu — pick a car make -->
+                <h:outputLabel for="makeSelect" value="Select Make:" styleClass="filter-label"/>
+                <h:selectOneMenu id="makeSelect" value="#{carFilterBean.selectedMake}"
+                                 styleClass="filter-select">
+                    <f:selectItem itemValue="" itemLabel="-- All Makes --"/>
+                    <f:selectItems value="#{carFilterBean.availableMakes}"/>
+                </h:selectOneMenu>
+
+                <!-- h:selectManyListbox — pick years -->
+                <h:outputLabel for="yearListbox" value="Select Years:" styleClass="filter-label"/>
+                <h:selectManyListbox id="yearListbox" value="#{carFilterBean.selectedYears}"
+                                     size="4" styleClass="filter-listbox">
+                    <f:selectItems value="#{carFilterBean.availableYears}"/>
+                </h:selectManyListbox>
+
+            </h:panelGrid>
+
+            <br/>
+            <!-- h:panelGroup — group action buttons together -->
+            <h:panelGroup>
+                <!-- h:commandLink — triggers filtering -->
+                <h:commandLink value="Apply Filter" action="#{carFilterBean.filter}"
+                               styleClass="action-link"/>
+                <!-- h:commandButton for reset -->
+                <h:commandButton value="Reset" action="#{carFilterBean.resetFilter}"
+                                 styleClass="btn btn-secondary"/>
+            </h:panelGroup>
+        </h:form>
+    </div>
+
+    <!-- Results section -->
+    <p class="result-count">
+        <h:outputText value="Showing #{carFilterBean.filteredCount} car(s)"/>
+    </p>
+
+    <!-- h:dataTable with h:column -->
+    <h:dataTable value="#{carFilterBean.filteredCars}" var="car" styleClass="cars-table"
+                 headerClass="cars-header" rowClasses="cars-row">
+        <h:column>
+            <f:facet name="header">Make</f:facet>
+            <h:outputText value="#{car.make}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Model</f:facet>
+            <h:outputText value="#{car.model}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Year</f:facet>
+            <h:outputText value="#{car.year}"/>
+        </h:column>
+    </h:dataTable>
+
+    <div class="nav-links">
+        <a class="nav-link" href="text-input.xhtml">Text Input Demo</a>
+        <a class="nav-link" href="gallery.xhtml">Gallery Demo</a>
+        <a class="nav-link" href="hello.xhtml">Home</a>
+    </div>
+</h:body>
+</html>
+

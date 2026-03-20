@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Text Input Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h2 { color: #333; margin-bottom: 8px; }
+        .subtitle { color: #777; font-size: 14px; margin-bottom: 24px; }
+
+        .form-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 28px;
+            max-width: 650px;
+        }
+        /* h:panelGrid generated table */
+        .form-grid {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+        .form-grid td:nth-child(1) {
+            width: 130px;
+            padding: 10px 10px;
+            vertical-align: middle;
+            text-align: right;
+        }
+        .form-grid td:nth-child(2) {
+            width: 280px;
+            padding: 10px 10px;
+            vertical-align: middle;
+        }
+        .form-grid td:nth-child(3) {
+            padding: 10px 10px;
+            vertical-align: middle;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .form-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-textarea {
+            width: 100%;
+            height: 80px;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+        .btn-primary {
+            background-color: #0066cc;
+            color: #fff;
+        }
+        .btn-primary:hover { background-color: #0055aa; }
+        .btn-secondary {
+            background-color: #888;
+            color: #fff;
+        }
+        .btn-secondary:hover { background-color: #666; }
+
+        .error-msg {
+            color: #cc0000;
+            font-size: 12px;
+        }
+        .global-msg {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .result-card {
+            margin-top: 20px;
+            background: #eef6ff;
+            border-left: 4px solid #0066cc;
+            padding: 16px 20px;
+            border-radius: 4px;
+            max-width: 650px;
+        }
+        .result-card .label { font-weight: bold; color: #333; }
+
+        .nav-links { margin-top: 24px; }
+        .nav-link {
+            color: #0066cc;
+            text-decoration: none;
+            margin-right: 16px;
+        }
+        .nav-link:hover { text-decoration: underline; }
+    </style>
+</h:head>
+<h:body>
+    <h2>Text Input Components Demo</h2>
+    <p class="subtitle">
+        Demonstrates: <b>h:form</b>, <b>h:inputText</b>, <b>h:inputTextarea</b>,
+        <b>h:outputText</b>, <b>h:outputLabel</b>, <b>h:message</b>,
+        <b>h:commandButton</b>, <b>h:panelGrid</b>
+    </p>
+
+    <div class="form-card">
+        <!-- h:form -->
+        <h:form id="contactForm">
+
+            <!-- h:panelGrid — renders a table with 3 columns: label, input, message -->
+            <h:panelGrid columns="3" styleClass="form-grid">
+
+                <!-- First Name -->
+                <!-- h:outputLabel -->
+                <h:outputLabel for="firstName" value="First Name:" styleClass="form-label"/>
+                <!-- h:inputText -->
+                <h:inputText id="firstName" value="#{textInputBean.firstName}"
+                             required="true" requiredMessage="First name is required"
+                             styleClass="form-input"/>
+                <!-- h:message — shows validation error for specific component -->
+                <h:message for="firstName" styleClass="error-msg"/>
+
+                <!-- Last Name -->
+                <h:outputLabel for="lastName" value="Last Name:" styleClass="form-label"/>
+                <h:inputText id="lastName" value="#{textInputBean.lastName}"
+                             required="true" requiredMessage="Last name is required"
+                             styleClass="form-input"/>
+                <h:message for="lastName" styleClass="error-msg"/>
+
+                <!-- Email -->
+                <h:outputLabel for="email" value="Email:" styleClass="form-label"/>
+                <h:inputText id="email" value="#{textInputBean.email}"
+                             styleClass="form-input"/>
+                <h:message for="email" styleClass="error-msg"/>
+
+                <!-- Phone -->
+                <h:outputLabel for="phone" value="Phone:" styleClass="form-label"/>
+                <h:inputText id="phone" value="#{textInputBean.phone}"
+                             styleClass="form-input"/>
+                <h:message for="phone" styleClass="error-msg"/>
+
+                <!-- Comments — h:inputTextarea -->
+                <h:outputLabel for="comments" value="Comments:" styleClass="form-label"/>
+                <h:inputTextarea id="comments" value="#{textInputBean.comments}"
+                                 styleClass="form-textarea"/>
+                <h:message for="comments" styleClass="error-msg"/>
+
+            </h:panelGrid>
+
+            <br/>
+            <!-- h:commandButton -->
+            <h:commandButton value="Submit" action="#{textInputBean.submit}"
+                             styleClass="btn btn-primary"/>
+            <h:commandButton value="Clear" action="#{textInputBean.clear}"
+                             immediate="true"
+                             styleClass="btn btn-secondary"/>
+
+            <!-- Global messages -->
+            <h:panelGroup rendered="#{not empty facesContext.messageList}">
+                <div class="global-msg">
+                    <h:messages globalOnly="true"/>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </div>
+
+    <!-- Show submitted result using h:outputText -->
+    <h:panelGroup rendered="#{not empty textInputBean.submittedSummary}">
+        <div class="result-card">
+            <span class="label">Submitted Data: </span>
+            <!-- h:outputText -->
+            <h:outputText value="#{textInputBean.submittedSummary}"/>
+        </div>
+    </h:panelGroup>
+
+    <div class="nav-links">
+        <a class="nav-link" href="car-filter.xhtml">Car Filter Demo</a>
+        <a class="nav-link" href="gallery.xhtml">Gallery Demo</a>
+        <a class="nav-link" href="hello.xhtml">Home</a>
+    </div>
+</h:body>
+</html>
+

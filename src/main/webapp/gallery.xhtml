@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Gallery Demo</title>
+    <!-- h:outputStylesheet — loads an external CSS resource -->
+    <h:outputStylesheet name="css/gallery.css"/>
+</h:head>
+<h:body>
+    <h2>Gallery &amp; Links Demo</h2>
+    <p class="subtitle">
+        Demonstrates: <b>h:graphicImage</b>, <b>h:outputLink</b>,
+        <b>h:outputStylesheet</b>, <b>h:panelGrid</b>, <b>h:panelGroup</b>,
+        <b>h:outputText</b>
+    </p>
+
+    <!-- h:panelGrid to lay out gallery cards in 3 columns -->
+    <h:panelGrid columns="3" styleClass="gallery-grid" columnClasses="gallery-col">
+
+        <f:facet name="header">
+            <h:outputText value="Technology Gallery" styleClass="gallery-title"/>
+        </f:facet>
+
+        <!-- Iterate manually for each gallery item (since ui:repeat needs facelets namespace,
+             we show three panelGroups to demonstrate the components clearly) -->
+
+        <!-- Card 1 -->
+        <h:panelGroup styleClass="gallery-card" layout="block">
+            <!-- h:graphicImage -->
+            <h:graphicImage url="#{galleryBean.items[0].imageUrl}"
+                            alt="#{galleryBean.items[0].title}"
+                            styleClass="gallery-img"/>
+            <div class="card-body">
+                <h:outputText value="#{galleryBean.items[0].title}" styleClass="card-title"/>
+                <br/>
+                <h:outputText value="#{galleryBean.items[0].description}" styleClass="card-desc"/>
+                <br/><br/>
+                <!-- h:outputLink — renders an anchor tag -->
+                <h:outputLink value="#{galleryBean.items[0].linkUrl}" styleClass="card-link"
+                              target="_blank">
+                    <h:outputText value="Visit Website &#8594;"/>
+                </h:outputLink>
+            </div>
+        </h:panelGroup>
+
+        <!-- Card 2 -->
+        <h:panelGroup styleClass="gallery-card" layout="block">
+            <h:graphicImage url="#{galleryBean.items[1].imageUrl}"
+                            alt="#{galleryBean.items[1].title}"
+                            styleClass="gallery-img"/>
+            <div class="card-body">
+                <h:outputText value="#{galleryBean.items[1].title}" styleClass="card-title"/>
+                <br/>
+                <h:outputText value="#{galleryBean.items[1].description}" styleClass="card-desc"/>
+                <br/><br/>
+                <h:outputLink value="#{galleryBean.items[1].linkUrl}" styleClass="card-link"
+                              target="_blank">
+                    <h:outputText value="Visit Website &#8594;"/>
+                </h:outputLink>
+            </div>
+        </h:panelGroup>
+
+        <!-- Card 3 -->
+        <h:panelGroup styleClass="gallery-card" layout="block">
+            <h:graphicImage url="#{galleryBean.items[2].imageUrl}"
+                            alt="#{galleryBean.items[2].title}"
+                            styleClass="gallery-img"/>
+            <div class="card-body">
+                <h:outputText value="#{galleryBean.items[2].title}" styleClass="card-title"/>
+                <br/>
+                <h:outputText value="#{galleryBean.items[2].description}" styleClass="card-desc"/>
+                <br/><br/>
+                <h:outputLink value="#{galleryBean.items[2].linkUrl}" styleClass="card-link"
+                              target="_blank">
+                    <h:outputText value="Visit Website &#8594;"/>
+                </h:outputLink>
+            </div>
+        </h:panelGroup>
+
+    </h:panelGrid>
+
+    <div class="nav-links">
+        <a class="nav-link" href="text-input.xhtml">Text Input Demo</a>
+        <a class="nav-link" href="car-filter.xhtml">Car Filter Demo</a>
+        <a class="nav-link" href="hello.xhtml">Home</a>
+    </div>
+</h:body>
+</html>
+
